@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet id="00000000000000-jitsi_conference_mapper" author="matthias.ransdorf@nordeck.net">
+        <createSequence sequenceName="seq_conference_id"
+                        startValue="111111"
+                        maxValue="9999999999"
+                        incrementBy="1"/>
+
+        <createTable tableName="conference_mapping">
+            <column name="id"
+                    autoIncrement="true"
+                    type="bigint">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_conference_mapping"/>
+            </column>
+            <column name="conference_id"
+                    type="bigint"/>
+
+            <column name="conference_name"
+                    type="varchar(255)"/>
+        </createTable>
+
+        <addUniqueConstraint tableName="conference_mapping"
+                             columnNames="conference_id"
+                             constraintName="uk_conference_mapping_conference_id"/>
+
+        <addNotNullConstraint tableName="conference_mapping"
+                              columnName="conference_id"
+                              constraintName="nn_conference_mapping_conference_id"/>
+
+        <addUniqueConstraint tableName="conference_mapping"
+                             columnNames="conference_name"
+                             constraintName="uk_conference_mapping_conference_name"/>
+
+        <addNotNullConstraint tableName="conference_mapping"
+                              columnName="conference_name"
+                              constraintName="nn_conference_mapping_conference_name"/>
+
+    </changeSet>
+</databaseChangeLog>

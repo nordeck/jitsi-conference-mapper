@@ -1,0 +1,86 @@
+<h1 align="center">
+  <br>
+  <a href="https://nordeck.net/"><img src="https://nordeck.net/wp-content/uploads/2020/05/NIC_logo_Nordeck-300x101.png" alt="Markdownify" width="200"></a>
+  <br>
+  Jitsi Conference Mapper
+  <br>
+</h1>
+<h4 align="center">A SIP-Call Mapper for <a href="https://jitsi.org/" target="_blank">Jitsi</a>.</h4>
+<p align="center">
+  <a href="#tl;dr">TL;DR</a> •
+  <a href="#demo">Demo</a> •
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#how-to-contribute">How to Contribute</a> •
+  <a href="#requirements">Requirements</a> •
+  <a href="#developement">Development</a> •
+  <a href="#license">License</a> •
+  <a href="#sponsors">Sponsors</a> •
+</p>
+
+## TL;DR
+
+- Helps to participate in a Jitsi Meet conference by SIP-Call.
+- A SIP-Call is not possible via `https://meet.domain.org/<ConferenceName>` so the App maps from `<ConferenceName>` to a 6-10-digit number
+- If `<ConferenceID>` is entered via `GET`, `<ConferenceName>` is returned
+- If `?conference=<ConferenceName>` then `<ConferenceID>` is returned. 
+
+The Selfhosted Jitsi Conference Mapper helps phone callers join a Jitsi Meet conference by SIP-Call.
+People joining by web or the Jitsi Meet Electron app click on a link like `https://meet.domain.org/<MyConferenceName>`.
+
+However, those calling by phone cannot simply type the `<ConferenceName>` into their phone. Clarified: If you enter `id=04023` via `GET`, the name of the conference will be returned. If you enter `conference=KarlWasHere`, the ID is returned (technically, both are returned always).
+
+The very first time a specific conference name is entered an n-digit number with n=6-9 digits number is generated and stored. After that, this pair is persisted - and reused for all requests.
+
+### Demo
+
+Until further notice feel free to visit the [Deployment](#deployment) section on how you can host the mapper app on your own.
+
+## Getting Started
+
+Development on the Jitsi conference mapper app happens at [GitHub](https://github.com/nordeck/Jitsi-Conference-Mapper).
+
+## How to Contribute
+
+Please take a look at our [Contribution Guidelines](https://github.com/nordeck/.github/blob/main/docs/CONTRIBUTING.md).
+
+### Requirements
+
+You need to have Docker, Maven and Java installed. Tell Jitsi to use this app as an API. Replace `<meet.domain.com> ` with your jitsi domain:
+
+`sudo nano /etc/jitsi/meet/meet.domain.com-config.js`
+
+Modify the dialConfCodeULR line to match your new path
+
+`dialInConfCodeUrl: 'https://<meet.domain.com>/conferenceMapper/`
+
+### Configuration
+
+Use the provided `application.yml` and fill it with your configuration.
+For a list of available options, see [Configuration](./.docs/configuration.md).
+
+## Deployment
+
+Setup the Database using Docker
+
+`docker run --rm --name jitsi_mapper__postgres -e POSTGRES_PASSWORD=postgres  -p 5432:5432 postgres`
+
+Build the App using Maven
+
+`cd 'path/to/Jitsi Conference Mapper' | mvn clean install package`
+
+Yon can run the app using
+
+`java -jar target/JitsiConferenceMapper-0.0.1-SNAPSHOT.jar`
+
+## License
+
+This project is licensed under [APACHE 2.0](./LICENSE).
+
+## Sponsors
+
+<p align="center">
+   &nbsp;
+   <a href="https://www.dataport.de/"><img src="./.docs/logos/dataportlogo.png" alt="Dataport" width="20%"></a>
+   &nbsp;&nbsp;&nbsp;&nbsp;
+   <a href="https://www.nordeck.net/"><img src="./.docs/logos/nordecklogo.png" alt="Nordeck" width="20%"></a>
+</p>
