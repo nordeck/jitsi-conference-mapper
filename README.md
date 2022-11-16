@@ -1,23 +1,27 @@
 <h1 align="center">
   <br>
-  <a href="https://nordeck.net/"><img src="https://nordeck.net/wp-content/uploads/2020/05/NIC_logo_Nordeck-300x101.png" alt="Markdownify" width="200"></a>
-  <br>
+  <div href="https://nordeck.net/" style="text-align: center;"><img src="https://nordeck.net/wp-content/uploads/2020/05/NIC_logo_Nordeck-300x101.png" alt="Markdownify" width="200"></div>
   Jitsi Conference Mapper
   <br>
 </h1>
 <h4 align="center">A SIP-Call Mapper for <a href="https://jitsi.org/" target="_blank">Jitsi</a>.</h4>
-<p align="center">
-  <a href="#tl;dr">TL;DR</a> •
-  <a href="#demo">Demo</a> •
-  <a href="#getting-started">Getting Started</a> •
-  <a href="#how-to-contribute">How to Contribute</a> •
-  <a href="#requirements">Requirements</a> •
-  <a href="#developement">Development</a> •
-  <a href="#license">License</a> •
-  <a href="#sponsors">Sponsors</a> •
-</p>
 
-## TL;DR
+<div align="center">
+
+• [TL;DR](#TL;DR)
+• [Demo](#Demo)
+• [Getting Started](#Getting Started) 
+• [How to Contribute](#How to Contribute) 
+• [Requirements](#Requirements) 
+• [Configuration](#Configuration) 
+• [Deployment](#Deployment) 
+• [License](#License) 
+• [Sponsors](#Sponsors) •
+
+</div>
+
+
+### TL;DR
 
 - Helps to participate in a Jitsi Meet conference by SIP-Call.
 - A SIP-Call is not possible via `https://meet.domain.org/<ConferenceName>` so the App maps from `<ConferenceName>` to a 6-10-digit number
@@ -35,11 +39,11 @@ The very first time a specific conference name is entered an n-digit number with
 
 Until further notice feel free to visit the [Deployment](#deployment) section on how you can host the mapper app on your own.
 
-## Getting Started
+### Getting Started
 
 Development on the Jitsi conference mapper app happens at [GitHub](https://github.com/nordeck/Jitsi-Conference-Mapper).
 
-## How to Contribute
+### How to Contribute
 
 Please take a look at our [Contribution Guidelines](https://github.com/nordeck/.github/blob/main/docs/CONTRIBUTING.md).
 
@@ -58,7 +62,7 @@ Modify the dialConfCodeULR line to match your new path
 Use the provided `application.yml` and fill it with your configuration.
 For a list of available options, see [Configuration](./.docs/configuration.md).
 
-## Deployment
+### Deployment
 
 Setup the Database using Docker
 
@@ -70,13 +74,31 @@ Build the App using Maven
 
 Yon can run the app using
 
-`java -jar target/JitsiConferenceMapper-0.0.1-SNAPSHOT.jar`
+`java -jar target/JitsiConferenceMapper-final.jar`
 
-## License
+Build the App using Docker
+
+`docker build -t nordeck/jitsi-mapper '.'`
+
+NOTE: If you want to run the App via Docker you need to provide a Docker Network (e.g. via Docker Compose) 
+so the App and the Database are able to exchange the mapping;
+
+Alternative Solution:
+
+Setup the database using Docker as mentioned above.
+
+Build the App using Docker
+
+`docker build -t nordeck/jitsi-mapper '.'`
+
+NOTE: If you want to run the App via Docker you need to provide a Docker Network (e.g. via Docker Compose)
+so the app itself and the database are able to exchange the mapping data;
+
+### License
 
 This project is licensed under [APACHE 2.0](./LICENSE).
 
-## Sponsors
+### Sponsors
 
 <p align="center">
    &nbsp;
