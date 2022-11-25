@@ -6,5 +6,5 @@ RUN mvn -f /app/pom.xml clean package
 
 FROM openjdk:17-alpine
 
-COPY --from=builder /app/target/JitsiConferenceMapper-final.jar /application.jar
+COPY --from=builder /app/target/JitsiConferenceMapper.jar /application.jar
 ENTRYPOINT ["java","-jar","/application.jar"]

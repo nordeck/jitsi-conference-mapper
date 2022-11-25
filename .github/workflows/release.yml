@@ -1,0 +1,22 @@
+name: Release
+
+on: [workflow_dispatch]
+
+jobs:
+  perform_release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: maven
+      - name: Perform maven release
+        uses: qcastel/github-actions-maven-release@v1.12.37
+        env:
+          JAVA_HOME: /usr/lib/jvm/java-17-openjdk/
+        with:
+          maven-args: "-DskipTests"
+          ssh-private-key: ${{ secrets.RELEASE_SSH_PRIVATE_KEY }}
