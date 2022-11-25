@@ -19,4 +19,7 @@ jobs:
           JAVA_HOME: /usr/lib/jvm/java-17-openjdk/
         with:
           maven-args: "-DskipTests"
+          version-minor: true
           ssh-private-key: ${{ secrets.RELEASE_SSH_PRIVATE_KEY }}
+          release-branch-name: "main"
+
