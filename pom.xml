@@ -76,13 +76,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <version>3.2.0</version>
-            <type>maven-plugin</type>
-        </dependency>
-
     </dependencies>
     <build>
         <finalName>JitsiConferenceMapper</finalName>
@@ -93,7 +86,6 @@
                 <version>${maven-release-plugin.version}</version>
                 <configuration>
                     <tagNameFormat>@{project.version}</tagNameFormat>
-                    <dryRun>true</dryRun>
                 </configuration>
             </plugin>
 
