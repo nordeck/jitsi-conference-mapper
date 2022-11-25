@@ -20,6 +20,6 @@ jobs:
         with:
           maven-args: "-DskipTests"
           version-minor: true
-          access-token: ${{ secrets.PACKAGE_TOKEN }}
+          ssh-private-key: ${{ secrets.RELEASE_SSH_PRIVATE_KEY }}
           release-branch-name: "main"
 
