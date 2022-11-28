@@ -23,8 +23,6 @@ jobs:
           distribution: 'adopt'
           cache: maven
       - name: Prepare Maven release
-        env:
-          JAVA_HOME: /usr/lib/jvm/java-17-openjdk/
         run: mvn --batch-mode build-helper:parse-version release:prepare -B -DdevelopmentVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT -DskipTests
       - name: Maven release
         run: mvn --batch-mode release:perform
