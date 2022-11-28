@@ -1,6 +1,6 @@
 name: Release
 
-on: [workflow_dispatch]
+on: [ workflow_dispatch ]
 
 jobs:
   perform_release:
@@ -8,34 +8,44 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Create release branch
-        run: git checkout -b main_release
+        with:
+          token: ${{ secrets.PACKAGE_TOKEN }}
+
       - name: Initialize mandatory git config
         run: |
           git config user.name "GitHub Actions"
           git config user.email noreply@github.com
-      - name: Push new branch
-        run: git push origin main_release
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'adopt'
           cache: maven
-      - name: Prepare Maven release
-        run: mvn --batch-mode build-helper:parse-version release:prepare -B -DdevelopmentVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT -DskipTests
-      - name: Maven release
-        run: mvn --batch-mode release:perform
-      - name: Create pull request into main
-        uses: thomaseizinger/create-pull-request@1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
+
+      - name: Set release version
+        run: |
+          mvn --batch-mode build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.0
+          echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      - name: Parse release version
+        uses: jungwinter/split@v2
+        id: split
         with:
-          github-token: ${{ secrets.PACKAGE_TOKEN }}
-          head: main_release
-          base: main
-          title: Merge release into main
-          reviewers: ${{ github.event.issue.user.login }}
-          body: |
-              This PR was created in release workflow running.
+          msg: ${{ env.RELEASE_VERSION }}
+          separator: '.'
+
+      - name: Create release branch
+        run: |
+          git checkout -b release/${{ steps.split.outputs._0 }}.${{ steps.split.outputs._1 }}
+          git add pom.xml
+          git commit -m "[release] ${{ env.RELEASE_VERSION }}"
+          git push --set-upstream origin release/${{ steps.split.outputs._0 }}.${{ steps.split.outputs._1 }}
+
+      - name: Create release tag
+        run: |
+          git tag ${{ env.RELEASE_VERSION }}
+          git push origin ${{ env.RELEASE_VERSION }}
+
+
 
