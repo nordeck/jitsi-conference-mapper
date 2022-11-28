@@ -31,6 +31,8 @@ jobs:
           release-branch-name: "main_release"
       - name: Create pull request into main
         uses: thomaseizinger/create-pull-request@1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
         with:
           github-token: ${{ secrets.PACKAGE_TOKEN }}
           head: main_release
