@@ -6,7 +6,14 @@ jobs:
   perform_release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Create release branch
+        run: git checkout -b main_release
+      - name: Initialize mandatory git config
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email noreply@github.com
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -21,5 +28,15 @@ jobs:
           maven-args: "-DskipTests"
           version-minor: true
           ssh-private-key: ${{ secrets.RELEASE_SSH_PRIVATE_KEY }}
-          release-branch-name: "main"
+          release-branch-name: "main_release"
+      - name: Create pull request into main
+        uses: thomaseizinger/create-pull-request@1.0.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
+          head: main_release
+          base: main
+          title: Merge release into main
+          reviewers: ${{ github.event.issue.user.login }}
+          body: |
+              This PR was created in release workflow running.
 
