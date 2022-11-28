@@ -32,7 +32,7 @@ jobs:
       - name: Create pull request into main
         uses: thomaseizinger/create-pull-request@1.0.0
         with:
-          GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
+          github-token: ${{ secrets.PACKAGE_TOKEN }}
           head: main_release
           base: main
           title: Merge release into main
