@@ -67,7 +67,6 @@ jobs:
         with:
           token: ${{ secrets.PACKAGE_TOKEN }}
           branch: nic/feat/version_update_${{ env.DEV_VERSION }}
-          delete-branch: true
           base: main
           title: Version update to ${{ env.DEV_VERSION }}
 
