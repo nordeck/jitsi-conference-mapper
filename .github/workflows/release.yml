@@ -16,25 +16,18 @@ jobs:
           git config user.email noreply@github.com
       - name: Push new branch
         run: git push origin main_release
-      - name: Checkout release branch
-        uses: actions/checkout@v3
-        with:
-          ref: main_release
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'adopt'
           cache: maven
-      - name: Perform maven release
-        uses: qcastel/github-actions-maven-release@v1.12.37
+      - name: Prepare Maven release
         env:
           JAVA_HOME: /usr/lib/jvm/java-17-openjdk/
-        with:
-          maven-args: "-DskipTests"
-          version-minor: true
-          ssh-private-key: ${{ secrets.RELEASE_SSH_PRIVATE_KEY }}
-          release-branch-name: "main_release"
+        run: mvn --batch-mode build-helper:parse-version release:prepare -B -DdevelopmentVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT -DskipTests
+      - name: Maven release
+        run: mvn --batch-mode release:perform
       - name: Create pull request into main
         uses: thomaseizinger/create-pull-request@1.0.0
         env:
