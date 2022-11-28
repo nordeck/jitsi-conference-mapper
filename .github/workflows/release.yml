@@ -48,14 +48,10 @@ jobs:
           git tag ${{ env.RELEASE_VERSION }}
           git push origin ${{ env.RELEASE_VERSION }}
 
-      - name: Checkout default branch
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PACKAGE_TOKEN }}
-          ref: main
-
       - name: Set development version
         run: |
+          git checkout main
+          git pull
           mvn --batch-mode build-helper:parse-version versions:set -DgenerateBackupPoms=false -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT
           echo "DEV_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
