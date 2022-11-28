@@ -16,6 +16,10 @@ jobs:
           git config user.email noreply@github.com
       - name: Push new branch
         run: git push origin main_release
+      - name: Checkout release branch
+        uses: actions/checkout@v3
+        with:
+          ref: main_release
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
