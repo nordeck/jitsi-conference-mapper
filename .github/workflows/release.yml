@@ -52,7 +52,7 @@ jobs:
         run: |
           git checkout main
           git pull
-          mvn --batch-mode build-helper:parse-version versions:set -DgenerateBackupPoms=false -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT
+          mvn --batch-mode build-helper:parse-version versions:set versions:commit -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT 
           echo "DEV_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
       - name: Create branch for new version number
@@ -61,14 +61,15 @@ jobs:
           git add pom.xml
           git commit -m "Version update to ${{ env.DEV_VERSION }}"
           git push --set-upstream origin nic/feat/version_update_${{ env.DEV_VERSION }}
+          git checkout main
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PACKAGE_TOKEN }}
           branch: nic/feat/version_update_${{ env.DEV_VERSION }}
-          base: main
           title: Version update to ${{ env.DEV_VERSION }}
+          delete-branch: true
 
       - name: Create Release
         uses: actions/create-release@v1
