@@ -58,7 +58,7 @@ jobs:
       - name: Create branch for development version pull request
         run: |
           git checkout -b nic/feat/version_update_to_${{ env.DEV_VERSION }}
-          git add .
+          git add pom.xml
           git commit -m "Version update to ${{ env.DEV_VERSION }}"
           git push --set-upstream origin nic/feat/version_update_${{ env.DEV_VERSION }}
 
