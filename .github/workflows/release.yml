@@ -63,7 +63,7 @@ jobs:
           git push -u origin nic/feat/version_update_${{ env.DEV_VERSION }}
 
       - name: Create pull request
-        run: gh pr create -B main -H nic/feat/version_update_${{ env.DEV_VERSION }} --title 'Merge nic/feat/version_update_to_${{ env.DEV_VERSION }} into main' --body 'Created by Github action'
+        run: gh pr create -B main -H nic/feat/version_update_to_${{ env.DEV_VERSION }} --title 'Merge nic/feat/version_update_to_${{ env.DEV_VERSION }} into main' --body 'Created by Github action'
         env:
           GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
 
