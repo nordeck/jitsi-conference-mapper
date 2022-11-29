@@ -55,21 +55,17 @@ jobs:
           mvn --batch-mode build-helper:parse-version versions:set versions:commit -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT 
           echo "DEV_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
-      - name: Create branch for new version number
+      - name: Create branch for development version pull request
         run: |
-          git checkout -b nic/feat/version_update_${{ env.DEV_VERSION }}
-          git add pom.xml
+          git checkout -b nic/feat/version_update_to_${{ env.DEV_VERSION }}
+          git add .
           git commit -m "Version update to ${{ env.DEV_VERSION }}"
           git push --set-upstream origin nic/feat/version_update_${{ env.DEV_VERSION }}
-          git checkout main
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.PACKAGE_TOKEN }}
-          branch: nic/feat/version_update_${{ env.DEV_VERSION }}
-          title: Version update to ${{ env.DEV_VERSION }}
-          delete-branch: true
+        run: gh pr create -B main -H nic/feat/version_update_${{ env.DEV_VERSION }} --title 'Merge nic/feat/version_update_to_${{ env.DEV_VERSION }} into main' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
 
       - name: Create Release
         uses: actions/create-release@v1
