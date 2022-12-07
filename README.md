@@ -9,7 +9,7 @@
 <div align="center">
 
 • [TL;DR](#TL;DR)
-• [Getting Started](#Getting Started) 
+• [Startup](#Startup) 
 • [Contribute](#Contribute) 
 • [Requirements](#Requirements) 
 • [Configuration](#Configuration) 
@@ -19,8 +19,7 @@
 
 </div>
 
-
-### TL;DR
+## TL;DR
 
 - Helps to participate in a Jitsi Meet conference by SIP-Call.
 - A SIP-Call is not possible via `https://meet.domain.org/<ConferenceName>` so the App maps from `<ConferenceName>` to a 6-10-digit number
@@ -34,21 +33,21 @@ However, those calling by phone cannot simply type the `<ConferenceName>` into t
 
 The very first time a specific conference name is entered an n-digit number with n=6-9 digits number is generated and stored. After that, this pair is persisted - and reused for all requests.
 
-### Getting Started
+## Startup
 
 Development on the Jitsi conference mapper app happens at [GitHub](https://github.com/nordeck/Jitsi-Conference-Mapper).
 
-### Contribute
+## Contribute
 
 Please take a look at our [Contribution Guidelines](https://github.com/nordeck/.github/blob/main/docs/CONTRIBUTING.md).
 
-### Requirements
+## Requirements
 
 You need to have Docker, Maven and Java installed. 
 
-### Configuration
+## Configuration
 
-Tell Jitsi to use this app as an API. Replace `<meet.domain.com> ` with your jitsi domain:
+Tell Jitsi to use this app as an API for Mapping. Replace `<meet.domain.com> ` with your jitsi domain:
 
 `sudo nano /etc/jitsi/meet/meet.domain.com-config.js`
 
@@ -58,46 +57,39 @@ Modify the dialConfCodeULR line to match your new path
 
 Please Note: You need to specify <b>port 8082</b> within the configuration.
 
-Use the provided `application.yml` and fill it with your configuration.
+Use the provided [application.yml](./src/main/resources/application.yaml) and fill it with your configuration.
 For a list of available options, see [Configuration](./.docs/configuration.md).
 
-### Deployment
+## Deployment
 
-Setup the Database using Docker
+In order to make the Application work properly you need to setup the database using Docker:
 
 `docker run --rm --name jitsi_mapper__postgres -e POSTGRES_PASSWORD=postgres  -p 5432:5432 postgres`
 
-Build the App using Maven
+### Build the Application using Maven
 
 `cd 'path/to/Jitsi Conference Mapper' | mvn clean install package`
 
 Yon can run the app using
 
-`java -jar target/JitsiConferenceMapper-final.jar`
+`java -jar target/<VERSION_TAG>-SNAPSHOT.jar`
 
-Build the App using Docker
+### Optional: Build the application using docker 
 
-`docker build -t nordeck/jitsi-mapper '.'`
+1. Build the App using Docker
 
-NOTE: If you want to run the App via Docker you need to provide a Docker Network (e.g. via Docker Compose) 
-so the App and the Database are able to exchange the mapping;
+`docker build -t nordeck/jcm '.'`
 
-Alternative Solution:
+2. Setup the database using Docker as mentioned above.
 
-Setup the database using Docker as mentioned above.
+> **Note** If you want to run the App via Docker it's mandatory to open a Docker Network (via Docker Compose e.g.) 
+so the app and the database can communicate;
 
-Build the App using Docker
-
-`docker build -t nordeck/jitsi-mapper '.'`
-
-NOTE: If you want to run the App via Docker you need to provide a Docker Network (e.g. via Docker Compose)
-so the app itself and the database are able to exchange the mapping data;
-
-### License
+## License
 
 This project is licensed under [APACHE 2.0](./LICENSE).
 
-### Sponsors
+## Sponsors
 
 <p align="center">
    &nbsp;
