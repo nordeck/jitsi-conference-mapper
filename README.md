@@ -9,9 +9,8 @@
 <div align="center">
 
 • [TL;DR](#TL;DR)
-• [Demo](#Demo)
 • [Getting Started](#Getting Started) 
-• [How to Contribute](#How to Contribute) 
+• [Contribute](#Contribute) 
 • [Requirements](#Requirements) 
 • [Configuration](#Configuration) 
 • [Deployment](#Deployment) 
@@ -35,29 +34,29 @@ However, those calling by phone cannot simply type the `<ConferenceName>` into t
 
 The very first time a specific conference name is entered an n-digit number with n=6-9 digits number is generated and stored. After that, this pair is persisted - and reused for all requests.
 
-### Demo
-
-Until further notice feel free to visit the [Deployment](#deployment) section on how you can host the mapper app on your own.
-
 ### Getting Started
 
 Development on the Jitsi conference mapper app happens at [GitHub](https://github.com/nordeck/Jitsi-Conference-Mapper).
 
-### How to Contribute
+### Contribute
 
 Please take a look at our [Contribution Guidelines](https://github.com/nordeck/.github/blob/main/docs/CONTRIBUTING.md).
 
 ### Requirements
 
-You need to have Docker, Maven and Java installed. Tell Jitsi to use this app as an API. Replace `<meet.domain.com> ` with your jitsi domain:
+You need to have Docker, Maven and Java installed. 
+
+### Configuration
+
+Tell Jitsi to use this app as an API. Replace `<meet.domain.com> ` with your jitsi domain:
 
 `sudo nano /etc/jitsi/meet/meet.domain.com-config.js`
 
 Modify the dialConfCodeULR line to match your new path
 
-`dialInConfCodeUrl: 'https://<meet.domain.com>/conferenceMapper/`
+`dialInConfCodeUrl: 'https://<meet.domain.com>:8082/conferenceMapper/`
 
-### Configuration
+Please Note: You need to specify <b>port 8082</b> within the configuration.
 
 Use the provided `application.yml` and fill it with your configuration.
 For a list of available options, see [Configuration](./.docs/configuration.md).
