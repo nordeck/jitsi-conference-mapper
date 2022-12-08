@@ -1,4 +1,4 @@
-name: Jitsi Conference Mapper CI
+name: Test
 
 on: [push]
 
