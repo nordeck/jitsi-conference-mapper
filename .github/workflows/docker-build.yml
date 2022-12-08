@@ -49,7 +49,7 @@ jobs:
         uses: docker/build-push-action@v3
         id: dockerBuild
         with:
-          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          push: true
           context: .
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
