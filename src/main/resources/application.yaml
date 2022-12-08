@@ -1,8 +1,7 @@
-# Environment Variables to be set
-
-# db.url:
-# db.user:
-# db.pass:
+#Environment Variables to be set
+#db.url:
+#db.user:
+#db.pass:
 
 spring:
   liquibase:
