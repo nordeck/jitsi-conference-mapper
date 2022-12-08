@@ -13,6 +13,9 @@ jobs:
 
   tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: jitsi-mapper
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -44,7 +47,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.PACKAGE_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate Docker metadata
         id: meta
@@ -65,6 +68,6 @@ jobs:
         id: dockerBuild
         with:
           push: true
-          context: .
+          context: ./jitsi-mapper/
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
