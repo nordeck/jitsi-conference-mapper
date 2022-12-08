@@ -17,7 +17,6 @@ jobs:
     timeout-minutes: 15
     outputs:
       docker-tag: ${{ steps.meta.outputs.version }}
-    needs: tests
     steps:
       - uses: actions/checkout@v3
         with:
