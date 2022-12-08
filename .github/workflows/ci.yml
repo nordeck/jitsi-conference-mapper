@@ -13,9 +13,6 @@ jobs:
 
   tests:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: jitsi-mapper
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -68,6 +65,6 @@ jobs:
         id: dockerBuild
         with:
           push: true
-          context: ./jitsi-mapper/
+          context: .
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
