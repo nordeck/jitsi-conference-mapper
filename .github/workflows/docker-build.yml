@@ -1,12 +1,9 @@
 name: Docker Image Build
 
-on: [push]
- # push:
- #   branches:
- #     - main
- #   tags:
- #     - '*.*.*'
- #   pull_request:
+on:
+  push:
+    tags:
+      - '*.*.*'
 
 env:
   DOCKER_IMAGE: ghcr.io/nordeck/jitsi-conference-mapper
