@@ -1,11 +1,12 @@
 name: Docker Image Build
 
-on:
-  push:
-    branches:
-      - main
-    tags:
-      - '*.*.*'
+on: [push]
+ # push:
+ #   branches:
+ #     - main
+ #   tags:
+ #     - '*.*.*'
+ #   pull_request:
 
 env:
   DOCKER_IMAGE: ghcr.io/nordeck/jitsi-conference-mapper
@@ -16,6 +17,7 @@ jobs:
     timeout-minutes: 15
     outputs:
       docker-tag: ${{ steps.meta.outputs.version }}
+    needs: tests
     steps:
       - uses: actions/checkout@v3
         with:
