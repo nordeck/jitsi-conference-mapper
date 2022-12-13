@@ -6,13 +6,9 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/nordeck/jitsi-conference-mapper
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: latest
-
-spring:
-  port: 8082
-  url: jdbc:oracle:thin:@//lokalerHorst:1521/horst
+  tag: pr-33
 
 
 imagePullSecrets: []
@@ -61,21 +57,27 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-# global variables needed by the feedback backend service and dependency service
+global:
+  postgresql:
+    auth:
+      username: postgres
+      password: postgres
+      database: postgres
+    # containerPorts:
+    #   postgresql: "5432"
+    tls:
+      enabled: false
 
-
-
-# private to postgres
 postgresql:
   auth:
-    enablePostgresUser: true
+    enablePostgresUser: false
     database: postgres
     username: postgres
     password: postgres
   containerPorts:
     postgresql: '5432'
   image:
-    tag: '15' # match with Grafana postgresVersion
+    tag: '15'
     pullPolicy: Always
   tls:
       enabled: false

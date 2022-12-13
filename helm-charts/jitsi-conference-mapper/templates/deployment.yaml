@@ -33,10 +33,34 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: application-yaml
+              mountPath: "/config"
+              readOnly: true
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: jitsi-conference-mapper-secrets
+                  key: db.user
+                  optional: false
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: jitsi-conference-mapper-secrets
+                  key: db.pass
+                  optional: false
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+      volumes:
+        - name: application-yaml
+          configMap:
+            name: jitsi-conference-mapper-configmap
+            items:
+              - key: application.yaml
+                path: application.yaml
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -52,5 +76,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-
 
