@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/nordeck/jitsi-conference-mapper
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: pr-33
+  tag: latest
 
 
 imagePullSecrets: []
@@ -57,32 +57,25 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-global:
-  postgresql:
-    auth:
-      username: postgres
-      password: postgres
-      database: postgres
-    # containerPorts:
-    #   postgresql: "5432"
-    tls:
-      enabled: false
-
 postgresql:
   auth:
     enablePostgresUser: false
-    database: postgres
-    username: postgres
-    password: postgres
+    # postgresPassword: postgres
+    database: jcm
+    username: jcm-user
+    password: jcm-pass
   containerPorts:
     postgresql: '5432'
   image:
     tag: '15'
     pullPolicy: Always
   tls:
-      enabled: false
-
-
+    enabled: false
+  # audit:
+  #   logHostname: true
+  #   logConnections: true
+  #   logDisconnections: true
+  #   clientMinMessages: debug
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

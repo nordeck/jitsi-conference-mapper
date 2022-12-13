@@ -33,23 +33,22 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          volumeMounts:
-            - name: application-yaml
-              mountPath: "/config"
-              readOnly: true
           env:
-            - name: DB_USER
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: jitsi-conference-mapper-configmap
+                  key: dbUrl
+            - name: SPRING_DATASOURCE_USER
               valueFrom:
                 secretKeyRef:
                   name: jitsi-conference-mapper-secrets
-                  key: db.user
-                  optional: false
-            - name: DB_PASS
+                  key: dbUser
+            - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: jitsi-conference-mapper-secrets
-                  key: db.pass
-                  optional: false
+                  key: dbPass
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
