@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jitsi-conference-mapper-configmap
+data:
+ application.yaml: |-
+   spring:
+    datasource:
+     url: {{ .Values.spring.url }}
+  
+ # dbUrl: jdbc:postgresql://{{ .Chart.Name }}-postgresql:{{ 1234 | default "5432"}}/{{ required "Setting a database name is required!" .Values.postgresql.auth.database}}

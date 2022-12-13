@@ -1,15 +1,15 @@
 #Environment Variables to be set
-#db.url:
-#db.user:
-#db.pass:
+db.url: jdbc:postgresql://localhost/postgres
+db.user: postgres
+db.pass: postgres
 
 spring:
   liquibase:
     change-log: classpath:liquibase/00000000000000_initial_schema.xml
   datasource:
-    url: ${db.url:jdbc:postgresql://localhost/postgres}
-    username: ${db.user:postgres}
-    password: ${db.pass:postgres}
+    url: ${db.url}
+    username: ${db.user}
+    password: ${db.pass}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
