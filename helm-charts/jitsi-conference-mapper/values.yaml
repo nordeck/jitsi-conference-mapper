@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/nordeck/jitsi-conference-mapper
   tag: latest
-  pullPolicy: Never
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
 
 imagePullSecrets: []
