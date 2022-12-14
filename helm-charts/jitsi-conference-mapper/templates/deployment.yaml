@@ -34,33 +34,25 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: SPRING_DATASOURCE_URL
+            - name: spring.datasource.url
               valueFrom:
                 configMapKeyRef:
-                  name: jitsi-conference-mapper-configmap
-                  key: dbUrl
-            - name: SPRING_DATASOURCE_USER
+                  name: {{ include "jitsi-conference-mapper.fullname" . }}-cm
+                  key: spring.datasource.url
+            - name: spring.datasource.username
               valueFrom:
                 secretKeyRef:
-                  name: jitsi-conference-mapper-secrets
-                  key: dbUser
-            - name: SPRING_DATASOURCE_PASSWORD
+                  name: {{ include "jitsi-conference-mapper.fullname" . }}-secret
+                  key: spring.datasource.username
+            - name: spring.datasource.password
               valueFrom:
                 secretKeyRef:
-                  name: jitsi-conference-mapper-secrets
-                  key: dbPass
+                  name: {{ include "jitsi-conference-mapper.fullname" . }}-secret
+                  key: spring.datasource.password
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-      volumes:
-        - name: application-yaml
-          configMap:
-            name: jitsi-conference-mapper-configmap
-            items:
-              - key: application.yaml
-                path: application.yaml
-
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

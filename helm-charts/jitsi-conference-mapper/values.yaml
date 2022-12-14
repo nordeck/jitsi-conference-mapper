@@ -6,10 +6,9 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/nordeck/jitsi-conference-mapper
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
   tag: latest
-
+  pullPolicy: Never
+  # Overrides the image tag whose default is the chart appVersion.
 
 imagePullSecrets: []
 nameOverride: ""
@@ -41,6 +40,23 @@ service:
   type: ClusterIP
   port: 8082
 
+probes:
+  liveness:
+    path: /health
+    initialDelaySeconds: 5
+    failureThreshold: 5
+    periodSeconds: 10
+  readiness:
+    path: /health
+    initialDelaySeconds: 5
+    failureThreshold: 5
+    periodSeconds: 10
+  startup:
+    path: /health
+    initialDelaySeconds: 5
+    failureThreshold: 30
+    periodSeconds: 10
+
 ingress:
   enabled: true
   className: ""
@@ -57,11 +73,16 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+jcm:
+  db:
+    name: jcm-db
+    user: jcm-user
+    pass: jcm-pass
+
 postgresql:
   auth:
     enablePostgresUser: false
-    # postgresPassword: postgres
-    database: jcm
+    database: jcm-db
     username: jcm-user
     password: jcm-pass
   containerPorts:
@@ -71,11 +92,11 @@ postgresql:
     pullPolicy: Always
   tls:
     enabled: false
-  # audit:
-  #   logHostname: true
-  #   logConnections: true
-  #   logDisconnections: true
-  #   clientMinMessages: debug
+  audit:
+    logHostname: true
+    logConnections: true
+    logDisconnections: true
+    clientMinMessages: debug
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

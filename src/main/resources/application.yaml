@@ -2,9 +2,9 @@ spring:
   liquibase:
     change-log: classpath:liquibase/00000000000000_initial_schema.xml
   datasource:
-    url: ${SPRING_DATASOURCE_URL:-jdbc:postgresql://localhost/jcm}
-    username: ${SPRING_DATASOURCE_USER:-jcm-user}
-    password: ${SPRING_DATASOURCE_PASSWORD:-jcm-pass}
+    url: ${spring.datasource.url:jdbc:postgresql://localhost/test}
+    username: ${spring.datasource.username:postgres}
+    password:  ${spring.datasource.username:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
