@@ -46,11 +46,9 @@ public class ConferenceMappingService {
 
     @Transactional
     public ValidResponseDto createConferenceMapping(String conferenceName) {
-        ConferenceNameFilter filter = new ConferenceNameFilter();
-        conferenceName = filter.adaptConferenceName(conferenceName);
-
+        String filteredConferenceName = applyFilter(conferenceName);
         ConferenceMapping mappingEntry = new ConferenceMapping();
-        mappingEntry.setConferenceName(conferenceName);
+        mappingEntry.setConferenceName(filteredConferenceName);
         mappingEntry.setConferenceId(repository.getConferenceId());
         repository.save(mappingEntry);
 
@@ -58,8 +56,13 @@ public class ConferenceMappingService {
     }
 
     public ValidResponseDto getConferenceMappingByConferenceName(String conferenceName) {
-        ConferenceMapping mappingEntry = repository.findConferenceMappingByConferenceName(conferenceName);
-        return toValidResponseDto(mappingEntry);
+        String filteredConferenceName = applyFilter(conferenceName);
+        if (conferenceExists(filteredConferenceName)) {
+            ConferenceMapping mappingEntry = repository.findConferenceMappingByConferenceName(filteredConferenceName);
+            return toValidResponseDto(mappingEntry);
+        } else {
+            return createConferenceMapping(filteredConferenceName);
+        }
     }
 
     public ResponseDto getConferenceMappingByConferenceId(Long conferenceId) {
@@ -80,5 +83,14 @@ public class ConferenceMappingService {
 
     private NotFoundResponseDto toNotFoundResponseDto(Long id) {
         return new NotFoundResponseDto(NOT_FOUND, id, false);
+    }
+
+    private String applyFilter(String conferenceName){
+        ConferenceNameFilter filter = new ConferenceNameFilter();
+        return filter.adaptConferenceName(conferenceName);
+    }
+
+    private Boolean conferenceExists(String conferenceName) {
+        return repository.findConferenceMappingByConferenceName(conferenceName) != null;
     }
 }
