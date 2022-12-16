@@ -85,7 +85,7 @@ public class ConferenceMappingService {
         return new NotFoundResponseDto(NOT_FOUND, id, false);
     }
 
-    private String applyFilter(String conferenceName){
+    private String applyFilter(String conferenceName) {
         ConferenceNameFilter filter = new ConferenceNameFilter();
         return filter.adaptConferenceName(conferenceName);
     }

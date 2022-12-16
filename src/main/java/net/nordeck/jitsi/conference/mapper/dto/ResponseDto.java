@@ -21,8 +21,10 @@ package net.nordeck.jitsi.conference.mapper.dto;
 
 public abstract class ResponseDto {
     private final String message;
+
     public ResponseDto(String message) {
         this.message = message;
     }
+
     public String getMessage() {return message;}
 }

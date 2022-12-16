@@ -9,12 +9,12 @@
 <div align="center">
 
 • [TL;DR](#TL;DR)
-• [Startup](#Startup) 
-• [Contribute](#Contribute) 
-• [Requirements](#Requirements) 
-• [Configuration](#Configuration) 
-• [Deployment](#Deployment) 
-• [License](#License) 
+• [Startup](#Startup)
+• [Contribute](#Contribute)
+• [Requirements](#Requirements)
+• [Configuration](#Configuration)
+• [Deployment](#Deployment)
+• [License](#License)
 • [Sponsors](#Sponsors) •
 
 </div>
@@ -22,16 +22,20 @@
 ## TL;DR
 
 - Helps to participate in a Jitsi Meet conference by SIP-Call.
-- A SIP-Call is not possible via `https://meet.domain.org/<ConferenceName>` so the App maps from `<ConferenceName>` to a 6-10-digit number
+- A SIP-Call is not possible via `https://meet.domain.org/<ConferenceName>` so the App maps from `<ConferenceName>` to a
+  6-10-digit number
 - If `<ConferenceID>` is entered via `GET`, `<ConferenceName>` is returned
-- If `?conference=<ConferenceName>` then `<ConferenceID>` is returned. 
+- If `?conference=<ConferenceName>` then `<ConferenceID>` is returned.
 
 The Selfhosted Jitsi Conference Mapper helps phone callers join a Jitsi Meet conference by SIP-Call.
 People joining by web or the Jitsi Meet Electron app click on a link like `https://meet.domain.org/<MyConferenceName>`.
 
-However, those calling by phone cannot simply type the `<ConferenceName>` into their phone. Clarified: If you enter `id=04023` via `GET`, the name of the conference will be returned. If you enter `conference=KarlWasHere`, the ID is returned (technically, both are returned always).
+However, those calling by phone cannot simply type the `<ConferenceName>` into their phone. Clarified: If you
+enter `id=04023` via `GET`, the name of the conference will be returned. If you enter `conference=KarlWasHere`, the ID
+is returned (technically, both are returned always).
 
-The very first time a specific conference name is entered an n-digit number with n=6-9 digits number is generated and stored. After that, this pair is persisted - and reused for all requests.
+The very first time a specific conference name is entered an n-digit number with n=6-9 digits number is generated and
+stored. After that, this pair is persisted - and reused for all requests.
 
 ## Startup
 
@@ -43,7 +47,7 @@ Please take a look at our [Contribution Guidelines](https://github.com/nordeck/.
 
 ## Requirements
 
-You need to have Docker, Maven and Java installed. 
+You need to have Docker, Maven and Java installed.
 
 ## Configuration
 
@@ -64,7 +68,7 @@ For a list of available options, see [Configuration](./.docs/configuration.md).
 
 In order to make the Application work properly you need to setup the database using Docker:
 
-`docker run --rm --name jitsi_mapper__postgres -e POSTGRES_PASSWORD=postgres  -p 5432:5432 postgres`
+`docker run --rm --name jitsi_mapper__postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres`
 
 ### Build the Application using Maven
 
@@ -74,7 +78,7 @@ Yon can run the app using
 
 `java -jar target/<VERSION_TAG>-SNAPSHOT.jar`
 
-### Optional: Build the application using docker 
+### Optional: Build the application using docker
 
 1. Build the App using Docker
 
@@ -82,8 +86,8 @@ Yon can run the app using
 
 2. Setup the database using Docker as mentioned above.
 
-> **Note** If you want to run the App via Docker it's mandatory to open a Docker Network (via Docker Compose e.g.) 
-so the app and the database can communicate;
+> **Note** If you want to run the App via Docker it's mandatory to open a Docker Network (via Docker Compose e.g.)
+> so the app and the database can communicate;
 
 ## License
 

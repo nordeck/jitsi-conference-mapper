@@ -31,5 +31,6 @@ public class NotFoundResponseDto extends ResponseDto {
     }
 
     public Long getId() {return id;}
+
     public Boolean getConference() {return conference;}
 }

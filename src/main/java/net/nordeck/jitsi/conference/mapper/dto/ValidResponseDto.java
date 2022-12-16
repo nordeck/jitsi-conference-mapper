@@ -31,5 +31,6 @@ public class ValidResponseDto extends ResponseDto {
     }
 
     public Long getId() {return id;}
+
     public String getConference() {return conference;}
 }
