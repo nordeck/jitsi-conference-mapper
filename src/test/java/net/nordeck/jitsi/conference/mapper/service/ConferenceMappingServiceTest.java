@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ConferenceMappingServiceTest {
 
-    private static final String CONFERENCE_NAME = "Test Conference";
+    private static final String CONFERENCE_NAME = "test-conference";
     private static final Long CONFERENCE_ID = 23L;
     private static final Long CONFERENCE_ID_NON_MATCHING = 8L;
     private final static String VALID_RESPONSE = "Successfully retrieved conference mapping";
@@ -65,6 +65,16 @@ class ConferenceMappingServiceTest {
         assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME)).isNotNull();
         assertEquals(VALID_RESPONSE, service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getMessage());
         assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getClass()).isEqualTo(ValidResponseDto.class);
+    }
+
+    @Test
+    public void thatConferenceIsFound() {
+        when(repo.findConferenceMappingByConferenceName(CONFERENCE_NAME)).thenReturn(entity);
+
+        assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME)).isNotNull();
+        assertEquals(VALID_RESPONSE, service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getMessage());
+        assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getClass()).isEqualTo(ValidResponseDto.class);
+        assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getConference()).isEqualTo(entity.getConferenceName());
     }
 
     @Test

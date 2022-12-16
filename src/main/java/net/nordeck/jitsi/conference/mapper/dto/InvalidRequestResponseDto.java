@@ -31,5 +31,6 @@ public class InvalidRequestResponseDto extends ResponseDto {
     }
 
     public Boolean getId() {return id;}
+
     public Boolean getConference() {return conference;}
 }
