@@ -50,7 +50,7 @@ public class ConferenceMappingController {
         if (StringUtils.isBlank(conference) && id != null) {
             return ResponseEntity.ok().body(service.getConferenceMappingByConferenceId(id));
         } else {
-            return ResponseEntity.ok().body(service.createConferenceMapping(conference));
+            return ResponseEntity.ok().body(service.getConferenceMappingByConferenceName(conference));
         }
     }
 }
