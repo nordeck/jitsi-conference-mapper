@@ -4,7 +4,7 @@ COPY pom.xml /app/
 COPY src /app/src
 RUN mvn -f /app/pom.xml clean package
 
-FROM eclipse-temurin:17-alpine
+FROM eclipse-temurin:17
 EXPOSE 8082
 
 COPY --from=builder /app/target/JitsiConferenceMapper.jar /application.jar
