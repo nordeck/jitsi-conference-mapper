@@ -24,9 +24,7 @@ metadata:
   labels:
     {{- include "jitsi-conference-mapper.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "jitsi-conference-mapper.selectorLabels" . | nindent 6 }}
@@ -43,7 +41,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "jitsi-conference-mapper.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
