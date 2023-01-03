@@ -50,11 +50,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: jcm.url
+            - name: jcm.db.jdbc.url
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "jitsi-conference-mapper.fullname" . }}-cm
-                  key: jcm.url
+                  key: jcm.db.jdbc.url
             - name: jcm.db.user
               valueFrom:
                 secretKeyRef:

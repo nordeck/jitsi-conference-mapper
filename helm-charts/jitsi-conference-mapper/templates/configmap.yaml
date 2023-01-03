@@ -22,7 +22,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "jitsi-conference-mapper.fullname" . }}-cm
 data:
-  jcm.url: jdbc:postgresql://{{-
+  jcm.db.jdbc.url: jdbc:postgresql://{{-
                          .Chart.Name -}}-postgresql:{{- 
                          .Values.postgresql.containerPorts.postgresql | default 5432 -}}/{{- required "Setting a database name is required!" 
                          .Values.jcm.db.name -}}
