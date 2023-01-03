@@ -85,10 +85,9 @@ ingress:
 
 jcm:
   db:
-    name: jcm-db
     user: jcm-user
     pass: jcm-pass
-  url: jcm.url
+    jdbc.url: jcm.url
 
 postgresql:
   auth:
