@@ -53,9 +53,7 @@ Tell Jitsi to use this app as an API for Mapping. Replace `<meet.domain.com> ` w
 
 Modify the dialConfCodeULR line to match your new path
 
-`dialInConfCodeUrl: 'https://<meet.domain.com>:8082/conferenceMapper/`
-
-Please Note: You need to specify <b>port 8082</b> within the configuration.
+`dialInConfCodeUrl: 'https://<meet.domain.com>/conferenceMapper/`
 
 Use the provided [application.yml](./src/main/resources/application.yaml) and fill it with your configuration.
 For a list of available options, see [Configuration](./.docs/configuration.md).
