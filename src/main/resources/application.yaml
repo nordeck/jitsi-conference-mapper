@@ -2,7 +2,7 @@ spring:
   liquibase:
     change-log: classpath:liquibase/00000000000000_initial_schema.xml
   datasource:
-    url: ${jcm.db.jdbc.url:jdbc:postgresql://localhost/test}
+    url: ${jcm.db.jdbc.url:jdbc:postgresql://localhost/postgres}
     username: ${jcm.db.user:postgres}
     password:  ${jcm.db.pass:postgres}
     driver-class-name: org.postgresql.Driver
@@ -11,4 +11,5 @@ spring:
     open-in-view: false
 server:
   port: 8082
+
 
