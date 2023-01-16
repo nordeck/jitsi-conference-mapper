@@ -11,5 +11,3 @@ spring:
     open-in-view: false
 server:
   port: 8082
-
-
