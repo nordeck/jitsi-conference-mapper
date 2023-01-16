@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <changeSet id="00000000000000-jitsi_conference_mapper" author="matthias.ransdorf@nordeck.net">
         <createSequence sequenceName="seq_conference_id"
-                        startValue="1111110"
+                        startValue="111111"
                         maxValue="9999999999"
                         incrementBy="1"/>
 
