@@ -19,7 +19,7 @@
         <mockito-core.version>4.8.0</mockito-core.version>
         <junit-jupiter-engine.version>5.9.0</junit-jupiter-engine.version>
         <liquibase-core.version>4.17.1</liquibase-core.version>
-        <postgresql.version>42.5.0</postgresql.version>
+        <postgresql.version>42.5.1</postgresql.version>
         <spring-data-jpa.version>2.7.5</spring-data-jpa.version>
         <maven-release-plugin.version>3.0.0-M7</maven-release-plugin.version>
     </properties>
