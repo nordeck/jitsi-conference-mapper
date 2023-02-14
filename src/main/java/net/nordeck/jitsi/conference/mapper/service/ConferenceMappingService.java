@@ -25,7 +25,6 @@ import net.nordeck.jitsi.conference.mapper.dto.InvalidRequestResponseDto;
 import net.nordeck.jitsi.conference.mapper.dto.NotFoundResponseDto;
 import net.nordeck.jitsi.conference.mapper.dto.ResponseDto;
 import net.nordeck.jitsi.conference.mapper.dto.ValidResponseDto;
-import net.nordeck.jitsi.conference.mapper.filter.ConferenceNameFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +45,8 @@ public class ConferenceMappingService {
 
     @Transactional
     public ValidResponseDto createConferenceMapping(String conferenceName) {
-        String filteredConferenceName = applyFilter(conferenceName);
         ConferenceMapping mappingEntry = new ConferenceMapping();
-        mappingEntry.setConferenceName(filteredConferenceName);
+        mappingEntry.setConferenceName(conferenceName);
         mappingEntry.setConferenceId(repository.getConferenceId());
         repository.save(mappingEntry);
 
@@ -56,12 +54,11 @@ public class ConferenceMappingService {
     }
 
     public ValidResponseDto getConferenceMappingByConferenceName(String conferenceName) {
-        String filteredConferenceName = applyFilter(conferenceName);
-        if (conferenceExists(filteredConferenceName)) {
-            ConferenceMapping mappingEntry = repository.findConferenceMappingByConferenceName(filteredConferenceName);
+        if (conferenceExists(conferenceName)) {
+            ConferenceMapping mappingEntry = repository.findConferenceMappingByConferenceName(conferenceName);
             return toValidResponseDto(mappingEntry);
         } else {
-            return createConferenceMapping(filteredConferenceName);
+            return createConferenceMapping(conferenceName);
         }
     }
 
@@ -84,11 +81,6 @@ public class ConferenceMappingService {
     private NotFoundResponseDto toNotFoundResponseDto(Long id) {
         return new NotFoundResponseDto(NOT_FOUND, id, false);
 
-    }
-
-    private String applyFilter(String conferenceName) {
-        ConferenceNameFilter filter = new ConferenceNameFilter();
-        return filter.adaptConferenceName(conferenceName);
     }
 
     private Boolean conferenceExists(String conferenceName) {
