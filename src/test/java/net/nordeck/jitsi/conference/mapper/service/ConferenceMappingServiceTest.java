@@ -45,7 +45,7 @@ class ConferenceMappingServiceTest {
     private final static String NON_PROVIDED_RESPONSE = "No conference or id provided";
 
     @Mock
-    private ConferenceMappingRepository repo;
+    private ConferenceMappingRepository repository;
     @InjectMocks
     private ConferenceMappingService service;
 
@@ -60,7 +60,22 @@ class ConferenceMappingServiceTest {
 
     @Test
     public void thatConferenceIsCreated() {
-        when(repo.findConferenceMappingByConferenceName(CONFERENCE_NAME)).thenReturn(entity);
+        when(repository.findConferenceMappingByConferenceName(CONFERENCE_NAME)).thenReturn(entity);
+
+        ValidResponseDto validResponseDto = new ValidResponseDto(VALID_RESPONSE,CONFERENCE_ID, CONFERENCE_NAME);
+        ConferenceMapping mappingEntry = new ConferenceMapping();
+        mappingEntry.setConferenceName(CONFERENCE_NAME);
+        mappingEntry.setConferenceId(CONFERENCE_ID);
+        repository.save(mappingEntry);
+
+        service.createConferenceMapping(CONFERENCE_NAME);
+
+        assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getConference())
+                .isEqualTo(validResponseDto.getConference());
+        assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getId())
+                .isEqualTo(validResponseDto.getId());
+        assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getMessage())
+                .isEqualTo(validResponseDto.getMessage());
 
         assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME)).isNotNull();
         assertEquals(VALID_RESPONSE, service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getMessage());
@@ -68,8 +83,23 @@ class ConferenceMappingServiceTest {
     }
 
     @Test
+    public void thatConferenceMappingIsCreated(){
+        ValidResponseDto validResponseDto = new ValidResponseDto(VALID_RESPONSE,CONFERENCE_ID, CONFERENCE_NAME);
+        ConferenceMapping mappingEntry = new ConferenceMapping();
+        mappingEntry.setConferenceName(CONFERENCE_NAME);
+        repository.save(mappingEntry);
+
+        service.createConferenceMapping(CONFERENCE_NAME);
+
+        assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getConference())
+                .isEqualTo(validResponseDto.getConference());
+        assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getMessage())
+                .isEqualTo(validResponseDto.getMessage());
+    }
+
+    @Test
     public void thatConferenceIsFound() {
-        when(repo.findConferenceMappingByConferenceName(CONFERENCE_NAME)).thenReturn(entity);
+        when(repository.findConferenceMappingByConferenceName(CONFERENCE_NAME)).thenReturn(entity);
 
         assertThat(service.getConferenceMappingByConferenceName(CONFERENCE_NAME)).isNotNull();
         assertEquals(VALID_RESPONSE, service.getConferenceMappingByConferenceName(CONFERENCE_NAME).getMessage());
@@ -79,7 +109,7 @@ class ConferenceMappingServiceTest {
 
     @Test
     public void thatConferenceNameIsReturnedByConferenceId() {
-        when(repo.findConferenceMappingByConferenceId(CONFERENCE_ID)).thenReturn(entity);
+        when(repository.findConferenceMappingByConferenceId(CONFERENCE_ID)).thenReturn(entity);
         service.createConferenceMapping(CONFERENCE_NAME);
 
         assertThat(service.getConferenceMappingByConferenceId(CONFERENCE_ID)).isNotNull();
