@@ -29,6 +29,6 @@ spec:
   containers:
     - name: wget
       image: busybox
-      command: ['wget']
-      args: ['{{ include "jitsi-conference-mapper.fullname" . }}:{{ .Values.service.port }}']
+      command: [ 'wget' ]
+      args: [ '{{ include "jitsi-conference-mapper.fullname" . }}:{{ .Values.service.port }}' ]
   restartPolicy: Never

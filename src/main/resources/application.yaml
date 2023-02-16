@@ -4,7 +4,7 @@ spring:
   datasource:
     url: ${jcm.db.jdbc.url:jdbc:postgresql://localhost/test}
     username: ${jcm.db.user:postgres}
-    password:  ${jcm.db.pass:postgres}
+    password: ${jcm.db.pass:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
